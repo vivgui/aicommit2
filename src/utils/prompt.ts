@@ -35,12 +35,14 @@ const commitTypeFormats: Record<CommitType, string> = {
 [optional body]
 
 [optional footer(s)]`,
+    minimal: `<description>`,
 };
 
 export const exampleCommitByType: Record<CommitType, string> = {
     '': '',
     conventional: `<type>(<optional scope>): <description>`,
     gitmoji: `:<emoji>: <description>`,
+    minimal: `<description>`,
 };
 
 const specifyCommitFormat = (type: CommitType = 'conventional') => {
@@ -59,6 +61,7 @@ get from gitmoji.dev
 */
 const commitTypes: Record<CommitType, string> = {
     '': '',
+    minimal: '',
     gitmoji: `\n${Object.entries({
         ':sparkles:': 'Introduce new features.',
         ':bug:': 'Fix a bug.',
@@ -235,6 +238,12 @@ const getLocalizedExample = (type: CommitType, locale: string): { subject: strin
             },
         },
         '': { en: { subject: '', body: '' } },
+        minimal: {
+            en: {
+                subject: 'Add real-time chat feature',
+                body: '- Implement WebSocket connection\\n- Add message encryption\\n- Include typing indicators',
+            },
+        },
     };
 
     const typeExamples = examples[type] || examples[''];
@@ -301,7 +310,7 @@ const finalPrompt = (type: CommitType, generate: number, locale: string) => {
     const example = (type: CommitType) => {
         const localizedExample = getLocalizedExample(type, locale);
 
-        if (type === 'conventional' || type === 'gitmoji') {
+        if (type === 'conventional' || type === 'gitmoji' || type === 'minimal') {
             return `${Array(generate)
                 .fill(null)
                 .map(

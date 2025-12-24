@@ -25,7 +25,7 @@ export const resolvePromptPath = (promptPath: string): string => {
     }
 };
 
-const commitTypes = ['', 'conventional', 'gitmoji'] as const;
+const commitTypes = ['', 'conventional', 'gitmoji', 'minimal'] as const;
 export type CommitType = (typeof commitTypes)[number];
 
 export const DEFAULT_OLLAMA_HOST = 'http://localhost:11434';
@@ -256,7 +256,7 @@ const generalConfigParsers = {
     },
     type(type?: CommitType) {
         if (!type) {
-            return 'conventional';
+            return 'minimal';
         }
 
         parseAssert('type', commitTypes.includes(type as CommitType), 'Invalid commit type');
