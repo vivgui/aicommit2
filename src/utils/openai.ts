@@ -220,6 +220,7 @@ export const generateCommitMessage = async (
                       // Reasoning models (o1, o3, gpt-5) use max_completion_tokens instead of max_tokens and don't support top_p
                       max_completion_tokens: maxTokens,
                       temperature: 1,
+                      reasoning_effort: 'none',
                   }
                 : {
                       // Standard models use traditional parameters
